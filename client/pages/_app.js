@@ -1,7 +1,9 @@
 import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+import {TransactionProvider} from "../context/TransactionContext";
+
+function MyApp({Component, pageProps}) {
+    return <TransactionProvider><Component {...pageProps} /></TransactionProvider>
 }
 
 export default MyApp
