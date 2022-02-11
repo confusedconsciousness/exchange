@@ -1,4 +1,4 @@
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import Image from 'next/image'
 import uniSwapLogo from '../assets/uniswap.png'
 import ethLogo from '../assets/eth.png'
@@ -27,6 +27,13 @@ export default function Header() {
 
     const [selectedNav, setSelectedNav] = useState('swap')
     const {currentAccount, connectWallet} = useContext(TransactionContext);
+
+    const [userName, setUserName] = useState();
+
+    useEffect(() => {
+        if (currentAccount !== undefined)
+            setUserName(`${currentAccount.slice(0,5)}...${currentAccount.slice(35, 42)}`)
+    }, [currentAccount])
 
     return (
         <div className={style.wrapper}>
@@ -68,7 +75,7 @@ export default function Header() {
                         <div
                             className={`${style.button} ${style.buttonPadding}`}>
                             <div className={`${style.buttonTextContainer} ${style.buttonPadding}`}>
-                                {currentAccount}
+                                {userName}
                             </div>
                         </div>
                     )

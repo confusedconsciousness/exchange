@@ -3,6 +3,8 @@ import Image from 'next/image'
 
 import ethLogo from '../assets/eth.png'
 import {AiOutlineDown} from "react-icons/ai";
+import {useContext} from "react";
+import {TransactionContext} from "../context/TransactionContext";
 
 const style = {
     wrapper: `w-screen flex items-center justify-center mt-14`,
@@ -19,6 +21,17 @@ const style = {
 }
 
 export default function Main() {
+
+    const {formData, handleChange, sendTransaction} = useContext(TransactionContext)
+
+    const handleSubmit = async (e) => {
+        const {addressTo, amount} = formData
+        e.preventDefault()
+
+        if (!addressTo || !amount) return
+        sendTransaction()
+    }
+
     return (
         <div className={style.wrapper}>
             <div className={style.content}>
@@ -49,7 +62,7 @@ export default function Main() {
                     <input type={"text"}
                            className={style.transferPropInput}
                            placeholder={"0x.."}
-                           onChange={(e) => handleChange(e, 'address')}/>
+                           onChange={(e) => handleChange(e, 'addressTo')}/>
 
                 </div>
                 <div className={style.confirmButton} onClick={(e) => handleSubmit(e)}>
